@@ -125,7 +125,12 @@ public class Dialect {
      * @return 总记录数的sql
      */
     protected String getCountString(String sql){
-        return "select count(1) from (" + sql + ") tmp_count";
+        String sqlLowerCase = sql.toLowerCase();
+        String[] ss = sqlLowerCase.split("order\\s+by\\s+");
+        String sqlNew = ss[0];
+        String[] sns = sqlNew.split("\\s+from\\s+");
+        String sqlFrom = sns[1];
+        return "select count(1) from " + sqlFrom;
     }
 
     /**
