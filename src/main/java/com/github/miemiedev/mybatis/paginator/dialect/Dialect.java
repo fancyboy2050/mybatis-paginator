@@ -119,6 +119,7 @@ public class Dialect {
         throw new UnsupportedOperationException("paged queries not supported");
     }
 
+    private static String ORDER_BY_REGEX = "order\\s+by\\s+\\`*\\w+\\`*\\s*(\\,\\s*\\`*\\w+\\`*\\s*)*";
     /**
      * 将sql转换为总记录数SQL
      * @param sql SQL语句
@@ -126,11 +127,18 @@ public class Dialect {
      */
     protected String getCountString(String sql){
         String sqlLowerCase = sql.toLowerCase();
-        String[] ss = sqlLowerCase.split("order\\s+by\\s+");
-        String sqlNew = ss[0];
-        String[] sns = sqlNew.split("\\s+from\\s+");
-        String sqlFrom = sns[1];
-        return "select count(1) from " + sqlFrom;
+        // 按可能存在order by的部分做分割
+        String[] ss = sqlLowerCase.split(ORDER_BY_REGEX);
+        // order by后有条件存在时，去除order by的部分做count计算
+        if(ss.length > 1){
+            return "select count(1) from (" + sqlLowerCase.replaceAll(ORDER_BY_REGEX, " ") + ") tmp_count";
+        } else {
+            // order by后没有条件存在时，截取from后语句，拼接成一条count语句
+            String sqlNew = ss[0];
+            String[] sns = sqlNew.split("\\s+from\\s+");
+            String sqlFrom = sns[1];
+            return "select count(1) from " + sqlFrom;
+        }
     }
 
     /**
