@@ -139,6 +139,7 @@ public class Dialect {
             String sqlFrom = sns[1];
             return "select count(1) from " + sqlFrom;
         }
+
     }
 
     /**
