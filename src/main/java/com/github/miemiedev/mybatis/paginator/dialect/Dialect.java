@@ -119,7 +119,7 @@ public class Dialect {
         throw new UnsupportedOperationException("paged queries not supported");
     }
 
-    private static String ORDER_BY_REGEX = "order\\s+by\\s+\\`*\\w+\\`*\\s*(\\,\\s*\\`*\\w+\\`*\\s*)*";
+    private static String ORDER_BY_REGEX = "order\\s+by\\s+\\`?\\w+\\`?\\s*?(\\s+(asc|desc))?\\s*(\\,\\s*\\`*\\w+\\`*\\s*?(\\s+(asc|desc))?\\s*)*";
     /**
      * 将sql转换为总记录数SQL
      * @param sql SQL语句
