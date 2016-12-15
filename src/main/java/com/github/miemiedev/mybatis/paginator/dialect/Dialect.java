@@ -121,7 +121,7 @@ public class Dialect {
 
     private static String ORDER_BY_REGEX = "order\\s+by\\s+\\`?\\w+\\`?\\s*?(\\s+(asc|desc))?\\s*(\\,\\s*\\`*\\w+\\`*\\s*?(\\s+(asc|desc))?\\s*)*";
     /**
-     * 将sql转换为总记录数SQL
+     * 将sql转换为总记录数SQL，变更
      * @param sql SQL语句
      * @return 总记录数的sql
      */
